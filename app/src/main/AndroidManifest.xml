@@ -17,6 +17,7 @@
 
         </activity>
         <activity android:name=".BottomBarNavigationMenu.MainMenuActivity"/>
+        <activity android:name=".BottomBarNavigationMenu.Tes"/>
     </application>
 
 </manifest>

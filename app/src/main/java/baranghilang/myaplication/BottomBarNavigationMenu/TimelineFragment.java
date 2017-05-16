@@ -1,10 +1,14 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,8 +17,13 @@ import android.view.ViewGroup;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
+import baranghilang.myaplication.Login_Fragment;
 import baranghilang.myaplication.R;
 import baranghilang.myaplication.RecyclerViewAdapterTimeline;
 
@@ -22,12 +31,13 @@ import baranghilang.myaplication.RecyclerViewAdapterTimeline;
 /**
  * Created by CMDDJ on 5/8/2017.
  */
-public class TimelineFragment extends Fragment {
+public class TimelineFragment extends Fragment  implements
+        View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    private static final int DIALOG1 = 1;
 
     private int[] mDemoDataSet0 = {R.drawable.ic_icon_24dp,
             R.drawable.ic_icon_24dp,
@@ -49,7 +59,6 @@ public class TimelineFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v= inflater.inflate(R.layout.activity_rcycl_timeline, container, false);
-
 
 
 
@@ -76,7 +85,35 @@ public class TimelineFragment extends Fragment {
             }
         }) );
 
+
+
         return v;
+    }
+
+
+
+
+//    private Dialog createSimpleDialog1(Context context) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setTitle("We will send notify to the owner that you have hound it.");
+//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                ;
+//            }
+//        });
+//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                ;
+//            }
+//        });
+//        return builder.create();
+//    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     public static interface ClickListener{
