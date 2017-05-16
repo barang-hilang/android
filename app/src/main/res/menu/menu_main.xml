@@ -6,9 +6,15 @@
         android:title="Timeline" >
     </item>
 
-    <item android:id="@+id/report"
+    <item android:id="@+id/Manage"
+        android:icon="@drawable/ic_sunting_black_24dp"
+        android:title="Manage" >
+    </item>
+
+
+    <item android:id="@+id/newreport"
         android:icon="@drawable/ic_create_report_white_24dp"
-        android:title="Report" >
+        android:title="Create" >
     </item>
 
     <item android:id="@+id/history"
@@ -16,9 +22,9 @@
         android:title="History" >
     </item>
 
-    <item android:id="@+id/MyInfo"
+    <item android:id="@+id/Profile"
         android:icon="@drawable/ic_user_information_24dp"
-        android:title="My Info" >
+        android:title="Profile" >
     </item>
 
 </menu>

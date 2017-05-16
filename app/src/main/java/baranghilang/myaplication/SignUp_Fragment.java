@@ -102,7 +102,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         String getPassword = password.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
 
-        // Pattern match for email id
+        // Pattern match for emails id
         Pattern p = Pattern.compile(Utils.regEx);
         Matcher m = p.matcher(getEmailId);
 
@@ -118,7 +118,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             new CustomToast().Show_Toast(getActivity(), view,
                     "All fields are required.");
 
-            // Check if email id valid or not
+            // Check if emails id valid or not
         else if (!m.find())
             new CustomToast().Show_Toast(getActivity(), view,
                     "Your Email Id is Invalid.");

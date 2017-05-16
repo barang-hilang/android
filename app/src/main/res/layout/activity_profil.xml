@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="MY INFORMATION"
+        android:textColor="#B71C1C"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edFullName"
+        android:editable="false"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/users"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="Full Name"
+        android:inputType="textCapWords"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
+    <EditText
+        android:id="@+id/edEmail"
+        android:editable="false"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/emails"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="Email"
+       android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
+    <EditText
+        android:id="@+id/edPassword"
+        android:editable="false"
+        android:singleLine="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/pw"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="@string/passowrd"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
+
+
+
+    <EditText
+        android:id="@+id/edPhone"
+        android:editable="false"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/mobile"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="Mobile Number"
+        android:inputType="phone"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
+    <EditText
+        android:id="@+id/edAddress"
+        android:editable="false"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/locations"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="Address"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
+
+
+
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/suntingprofilebutton_selector"
+        android:padding="3dp"
+        android:text="EDIT"
+        android:textColor="@color/white_greyish"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="LOGOUT"
+        android:textColor="#959595"
+        android:textSize="15sp" />
+
+
+</LinearLayout>
