@@ -215,82 +215,8 @@ public class Login_Fragment extends Fragment implements
             // Else do login and do your stuff
         else
         {
-//            loginToBackEnd(getEmailId,getPassword);
             loginAuthPostBodyJson(getEmailId,getPassword);
         }
-
-    }
-
-    private void loginToBackEnd(final String email, final String password){
-        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String url = "http://barang-hilang.azurewebsites.net/api/v1/users/auth";
-
-        StringRequest requestResponse = new StringRequest(Request.Method.POST, url
-        , new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray result = jsonObject.getJSONArray("result");
-                    userModel.setEmail(result.getJSONObject(0).getString("email"));
-                    userModel.setPassword(result.getJSONObject(0).getString("pasword"));
-                    userModel.setUsername(result.getJSONObject(0).getString("username"));
-                    userModel.setAlamat(result.getJSONObject(0).getString("alamat"));
-                    userModel.setIdDev(result.getJSONObject(0).getString("idDev"));
-                    userModel.setIdUser(result.getJSONObject(0).getString("idUser"));
-                    userModel.setNoHp(result.getJSONObject(0).getString("noHp"));
-                    Log.e("Email User Auth : ",userModel.getEmail());
-                    Toast.makeText(getContext(),"Success Login",Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Login success!", Toast.LENGTH_SHORT)
-                            .show();
-                    Intent intent = new Intent(getActivity(), MainMenuActivity.class);
-                    startActivity(intent);
-
-                } catch (JSONException e) {
-                    Log.e("Error",e.toString());
-                    e.printStackTrace();
-                    progressDialog.dismiss();
-                    new CustomToast().Show_Toast(getActivity(), view,
-                        "Sorry, email/password seems wrong");
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Error",error.toString());
-                progressDialog.dismiss();
-                new CustomToast().Show_Toast(getActivity(), view,
-                       error.toString());
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("email",email);
-                params.put("password",password);
-                return params;
-           }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> header = new HashMap<String, String>();
-                header.put("apiKey","wakowakowakowa");
-                header.put("Content-Type", "application/json");
-                return header ;
-            }
-
-            @Override
-            public String getBodyContentType() {
-                return "application/json";
-            }
-        };
-        requestResponse.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        progressDialog = new ProgressDialog(this.getContext(),R.style.AppTheme);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Getting Data...");
-        progressDialog.show();
-        queue.add(requestResponse);
 
     }
 
@@ -343,7 +269,7 @@ public class Login_Fragment extends Fragment implements
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<String, String>();
-                header.put("apiKey","wakowakowakowa1");
+                header.put("apiKey","wakowakowakowa");
                 header.put("Content-Type", "application/json");
                 return header ;
             }

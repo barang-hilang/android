@@ -1,12 +1,17 @@
 package baranghilang.myaplication;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +21,22 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import baranghilang.myaplication.BottomBarNavigationMenu.MainMenuActivity;
+import baranghilang.myaplication.model.UserModel;
 
 /**
  * Created by CMDDJ on 5/4/2017.
@@ -29,7 +50,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
     private static TextView login;
     private static Button signUpButton;
     private static CheckBox terms_conditions;
-
+    private static UserModel user;
+    private ProgressDialog progressDialog;
     public SignUp_Fragment() {
 
     }
@@ -40,6 +62,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         view = inflater.inflate(R.layout.signup_layout, container, false);
         initViews();
         setListeners();
+        user = new UserModel();
+        progressDialog=null;
         return view;
     }
 
@@ -135,8 +159,71 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
             // Else do signup or do your stuff
         else
-            Toast.makeText(getActivity(), "Do SignUp.", Toast.LENGTH_SHORT)
-                    .show();
+        {
+            user.setEmail(getEmailId);
+            user.setPassword(getPassword);
+            user.setUsername(getFullName);
+            user.setNoHp(getMobileNumber);
+            user.setAlamat(getLocation);
+            registerPostBodyJson(user);
+        }
 
+    }
+
+    private void registerPostBodyJson(UserModel userInput){
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url = "http://barang-hilang.azurewebsites.net/api/v1/users/";
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("email",userInput.getEmail());
+        params.put("password",userInput.getPassword());
+        params.put("username",userInput.getUsername());
+        params.put("noHp",userInput.getNoHp());
+        params.put("alamat",userInput.getAlamat());
+
+        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            //Process os success response
+                            String result = response.getString("message");
+                            new CustomToast().Show_Toast(getActivity(),view,result.toString());
+                            progressDialog.dismiss();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            progressDialog.dismiss();
+                            new CustomToast().Show_Toast(getActivity(), view,
+                                    "Sorry, register failed, please try again, "+e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                progressDialog.dismiss();
+                new CustomToast().Show_Toast(getActivity(), view,
+                        error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("apiKey","wakowakowakowa");
+                header.put("Content-Type", "application/json");
+                return header ;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        request_json.setRetryPolicy(new DefaultRetryPolicy( 5000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        progressDialog = new ProgressDialog(this.getContext(),R.style.AppTheme);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Registering Data...");
+        progressDialog.show();
+        queue.add(request_json);
     }
 }
