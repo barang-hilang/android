@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp" >
 
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:padding="10dp"
         android:text="MY INFORMATION"
@@ -19,8 +19,8 @@
     <EditText
         android:id="@+id/edFullName"
         android:editable="false"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/users"
@@ -42,8 +42,8 @@
     <EditText
         android:id="@+id/edEmail"
         android:editable="false"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/emails"
@@ -58,7 +58,7 @@
         android:textSize="16sp" />
 
     <View
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
@@ -66,8 +66,8 @@
         android:id="@+id/edPassword"
         android:editable="false"
         android:singleLine="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/pw"
         android:drawablePadding="8dp"
@@ -80,7 +80,7 @@
         android:textSize="16sp" />
 
     <View
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
@@ -90,8 +90,8 @@
     <EditText
         android:id="@+id/edPhone"
         android:editable="false"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/mobile"
@@ -106,15 +106,15 @@
         android:textSize="16sp" />
 
     <View
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
     <EditText
         android:id="@+id/edAddress"
         android:editable="false"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/locations"
@@ -129,7 +129,7 @@
         android:textSize="16sp" />
 
     <View
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
@@ -138,8 +138,8 @@
 
     <Button
         android:id="@+id/edit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="15dp"
         android:background="@drawable/suntingprofilebutton_selector"
         android:padding="3dp"
@@ -150,8 +150,8 @@
 
     <TextView
         android:id="@+id/tvLogOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:gravity="center"

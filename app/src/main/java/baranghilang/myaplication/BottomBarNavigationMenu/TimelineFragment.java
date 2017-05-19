@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -38,6 +39,7 @@ public class TimelineFragment extends Fragment  implements
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static final int DIALOG1 = 1;
+    private Button btnBagi;
 
     private int[] mDemoDataSet0 = {R.drawable.ic_icon_24dp,
             R.drawable.ic_icon_24dp,
@@ -61,7 +63,7 @@ public class TimelineFragment extends Fragment  implements
         View v= inflater.inflate(R.layout.activity_rcycl_timeline, container, false);
 
 
-
+       // btnBagi = (Button) v.findViewById(R.id.btnBagikan);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.rvTL);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this.getActivity());
@@ -70,6 +72,13 @@ public class TimelineFragment extends Fragment  implements
         mAdapter = new RecyclerViewAdapterTimeline(mDemoDataSet0, mDemoDataSet, mDemoDataSet2);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+//        btnBagi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "Konten dibagikan", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), mRecyclerView, new ClickListener() {
             @Override
@@ -85,31 +94,10 @@ public class TimelineFragment extends Fragment  implements
             }
         }) );
 
-
-
         return v;
+
     }
 
-
-
-
-//    private Dialog createSimpleDialog1(Context context) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//        builder.setTitle("We will send notify to the owner that you have hound it.");
-//        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                ;
-//            }
-//        });
-//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                ;
-//            }
-//        });
-//        return builder.create();
-//    }
 
     @Override
     public void onClick(View v) {
