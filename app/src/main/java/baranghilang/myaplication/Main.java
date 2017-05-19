@@ -42,7 +42,7 @@ public class Main extends ActionBarActivity {
         mLayoutManager = new LinearLayoutManager(this);
         // mLayoutManager.
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerViewAdapter(mDemoDataSet);
+        mAdapter = new RecyclerViewAdapter(mDemoDataSet,null);
         mRecyclerView.setAdapter(mAdapter);
 
 

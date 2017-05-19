@@ -1,10 +1,15 @@
 package baranghilang.myaplication;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import baranghilang.myaplication.BottomBarNavigationMenu.MainMenuActivity;
+import baranghilang.myaplication.helperVolley.CustomRequest;
+import baranghilang.myaplication.model.UserModel;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
@@ -14,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +34,21 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -47,6 +68,8 @@ public class Login_Fragment extends Fragment implements
     private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
     private static FragmentManager fragmentManager;
+    private UserModel userModel ;
+    private ProgressDialog progressDialog;
 
     public Login_Fragment() {
 
@@ -58,6 +81,8 @@ public class Login_Fragment extends Fragment implements
         view = inflater.inflate(R.layout.login_layout, container, false);
         initViews();
         setListeners();
+        userModel= new UserModel();
+        progressDialog = null;
         return view;
     }
 
@@ -190,16 +215,150 @@ public class Login_Fragment extends Fragment implements
             // Else do login and do your stuff
         else
         {
-            Toast.makeText(getActivity(), "Login success!", Toast.LENGTH_SHORT)
-                    .show();
-
-
-            Intent intent = new Intent(getActivity(), MainMenuActivity.class);
-            startActivity(intent);
-
-
+//            loginToBackEnd(getEmailId,getPassword);
+            loginAuthPostBodyJson(getEmailId,getPassword);
         }
 
+    }
+
+    private void loginToBackEnd(final String email, final String password){
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url = "http://barang-hilang.azurewebsites.net/api/v1/users/auth";
+
+        StringRequest requestResponse = new StringRequest(Request.Method.POST, url
+        , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray result = jsonObject.getJSONArray("result");
+                    userModel.setEmail(result.getJSONObject(0).getString("email"));
+                    userModel.setPassword(result.getJSONObject(0).getString("pasword"));
+                    userModel.setUsername(result.getJSONObject(0).getString("username"));
+                    userModel.setAlamat(result.getJSONObject(0).getString("alamat"));
+                    userModel.setIdDev(result.getJSONObject(0).getString("idDev"));
+                    userModel.setIdUser(result.getJSONObject(0).getString("idUser"));
+                    userModel.setNoHp(result.getJSONObject(0).getString("noHp"));
+                    Log.e("Email User Auth : ",userModel.getEmail());
+                    Toast.makeText(getContext(),"Success Login",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Login success!", Toast.LENGTH_SHORT)
+                            .show();
+                    Intent intent = new Intent(getActivity(), MainMenuActivity.class);
+                    startActivity(intent);
+
+                } catch (JSONException e) {
+                    Log.e("Error",e.toString());
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                    new CustomToast().Show_Toast(getActivity(), view,
+                        "Sorry, email/password seems wrong");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error",error.toString());
+                progressDialog.dismiss();
+                new CustomToast().Show_Toast(getActivity(), view,
+                       error.toString());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("email",email);
+                params.put("password",password);
+                return params;
+           }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("apiKey","wakowakowakowa");
+                header.put("Content-Type", "application/json");
+                return header ;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        requestResponse.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        progressDialog = new ProgressDialog(this.getContext(),R.style.AppTheme);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Getting Data...");
+        progressDialog.show();
+        queue.add(requestResponse);
+
+    }
+
+    private void loginAuthPostBodyJson(String email,String password){
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url = "http://barang-hilang.azurewebsites.net/api/v1/users/auth";
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("email",email);
+        params.put("password",password);
+
+        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            //Process os success response
+                            JSONArray result = response.getJSONArray("result");
+                            userModel.setEmail(result.getJSONObject(0).getString("email"));
+                            userModel.setPassword(result.getJSONObject(0).getString("password"));
+                            userModel.setUsername(result.getJSONObject(0).getString("username"));
+                            userModel.setAlamat(result.getJSONObject(0).getString("alamat"));
+//                            userModel.setIdDev(result.getJSONObject(0).getString("idDeveloper"));
+                            userModel.setIdUser(result.getJSONObject(0).getString("idUser"));
+                            userModel.setNoHp(result.getJSONObject(0).getString("noHp"));
+                            Log.e("Email User Auth : ",userModel.getEmail());
+                            Toast.makeText(getContext(),"Success Login",Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Login success!", Toast.LENGTH_SHORT)
+                                    .show();
+                            MainMenuActivity.userModel=userModel;
+                            Intent intent = new Intent(getActivity(), MainMenuActivity.class);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            progressDialog.dismiss();
+                            new CustomToast().Show_Toast(getActivity(), view,
+                                    "Sorry, email/password seems wrong, "+e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                progressDialog.dismiss();
+                new CustomToast().Show_Toast(getActivity(), view,
+                        error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("apiKey","wakowakowakowa1");
+                header.put("Content-Type", "application/json");
+                return header ;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        request_json.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        progressDialog = new ProgressDialog(this.getContext(),R.style.AppTheme);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Getting Data...");
+        progressDialog.show();
+        queue.add(request_json);
     }
 
 }

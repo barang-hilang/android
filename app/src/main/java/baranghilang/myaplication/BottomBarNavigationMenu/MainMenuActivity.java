@@ -8,10 +8,11 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 
 import baranghilang.myaplication.R;
+import baranghilang.myaplication.model.UserModel;
 
 
 public class MainMenuActivity extends ActionBarActivity {
-
+    public static UserModel userModel;
     BottomBar mBottomBar;
 
     @Override
