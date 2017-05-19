@@ -14,9 +14,12 @@ import android.view.ViewGroup;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 class ViewPagerAdapterTimeline extends PagerAdapter {
 
+    private View v;
    /* private boolean isPagingEnabled = true;
 
     public ViewPagerAdapterTimeline(Context context) {
@@ -41,10 +44,11 @@ class ViewPagerAdapterTimeline extends PagerAdapter {
         this.isPagingEnabled = b;
     }*/
 
+    private Button btnBagi;
 
-    public Object instantiateItem(ViewGroup collection, int position) {
+    public Object instantiateItem(final ViewGroup collection, int position) {
 
-
+    v = new View(collection.getContext());
 
         int resId1 = 0;
         switch (position) {
@@ -53,6 +57,7 @@ class ViewPagerAdapterTimeline extends PagerAdapter {
                 break;
             case 1:
                 resId1 = R.id.secondaryContentFrameLayoutBarang;
+
                 break;
         }
         return collection.findViewById(resId1);

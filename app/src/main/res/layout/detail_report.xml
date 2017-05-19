@@ -167,7 +167,7 @@
         android:textSize="17sp"
         android:textStyle="bold"
         android:layout_below="@+id/tvEmail"
-        />
+        android:onClick="eventBtnFood1" />
 
     <TextView
         android:id="@+id/tvBack"
