@@ -27,9 +27,15 @@ public class MainMenuActivity extends ActionBarActivity {
                     TimelineFragment f = new TimelineFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
                 }
-                else if(i==R.id.report)
+                else if(i==R.id.Manage)
                 {
                     ReportFragment f = new ReportFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
+
+                }
+                else if(i==R.id.newreport)
+                {
+                    CreateReport f = new CreateReport();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
 
                 }
@@ -39,9 +45,9 @@ public class MainMenuActivity extends ActionBarActivity {
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
 
                 }
-                else if(i==R.id.MyInfo)
+                else if(i==R.id.Profile)
                 {
-                    MyInfoFragment f = new MyInfoFragment();
+                    ProfileFragment f = new ProfileFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
 
                 }
@@ -56,8 +62,9 @@ public class MainMenuActivity extends ActionBarActivity {
 
         mBottomBar.mapColorForTab(0, "#009688");
         mBottomBar.mapColorForTab(1, "#F4511E");
-        mBottomBar.mapColorForTab(2, "#9C27B0");
-        mBottomBar.mapColorForTab(3, "#0288D1");
+        mBottomBar.mapColorForTab(2, "#0288D1");
+        mBottomBar.mapColorForTab(3, "#AB47BC");
+        mBottomBar.mapColorForTab(4, "#B71C1C");
 
         /*BottomBarBadge unread;
         unread = mBottomBar.makeBadgeForTabAt(3, "#BDBDBD", 13);

@@ -166,11 +166,11 @@ public class Login_Fragment extends Fragment implements
 
     // Check Validation before login
     private void checkValidation() {
-        // Get email id and password
+        // Get emails id and password
         String getEmailId = emailid.getText().toString();
         String getPassword = password.getText().toString();
 
-        // Check patter for email id
+        // Check patter for emails id
         Pattern p = Pattern.compile(Utils.regEx);
 
         Matcher m = p.matcher(getEmailId);
@@ -183,14 +183,14 @@ public class Login_Fragment extends Fragment implements
                     "Enter both credentials.");
 
         }
-        // Check if email is valid or not
+        // Check if emails is valid or not
         else if (!m.find())
             new CustomToast().Show_Toast(getActivity(), view,
                     "Your Email Id is Invalid.");
             // Else do login and do your stuff
         else
         {
-            Toast.makeText(getActivity(), "Do Login.", Toast.LENGTH_SHORT)
+            Toast.makeText(getActivity(), "Login success!", Toast.LENGTH_SHORT)
                     .show();
 
 
