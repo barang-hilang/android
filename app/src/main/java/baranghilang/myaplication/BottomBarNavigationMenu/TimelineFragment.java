@@ -1,14 +1,10 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,14 +13,7 @@ import android.view.ViewGroup;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Calendar;
-
-import baranghilang.myaplication.Login_Fragment;
 import baranghilang.myaplication.R;
 import baranghilang.myaplication.RecyclerViewAdapterTimeline;
 
@@ -83,13 +72,13 @@ public class TimelineFragment extends Fragment  implements
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), Tes.class);
+                Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), Tes.class);
+                Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }
         }) );

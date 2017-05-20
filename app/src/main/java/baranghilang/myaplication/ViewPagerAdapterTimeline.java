@@ -20,29 +20,6 @@ import android.widget.Toast;
 class ViewPagerAdapterTimeline extends PagerAdapter {
 
     private View v;
-   /* private boolean isPagingEnabled = true;
-
-    public ViewPagerAdapterTimeline(Context context) {
-        super(context);
-    }
-
-    public ViewPagerAdapterTimeline(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return this.isPagingEnabled && super.onTouchEvent(event);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        return this.isPagingEnabled && super.onInterceptTouchEvent(event);
-    }
-
-    public void setPagingEnabled(boolean b) {
-        this.isPagingEnabled = b;
-    }*/
 
     private Button btnBagi;
 
