@@ -42,6 +42,7 @@ public class MainMenuActivity extends ActionBarActivity {
                 }
                 else if(i==R.id.history)
                 {
+
                    HistoryFragment f = new HistoryFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
 

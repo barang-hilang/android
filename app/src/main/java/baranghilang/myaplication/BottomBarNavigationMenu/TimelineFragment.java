@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -72,12 +73,14 @@ public class TimelineFragment extends Fragment  implements
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+
                 Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }
 
             @Override
             public void onLongClick(View view, int position) {
+
                 Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }

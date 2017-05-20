@@ -23,6 +23,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -216,6 +217,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         };
         request_json.setRetryPolicy(new DefaultRetryPolicy( 5000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         progressDialog = new ProgressDialog(this.getContext(), R.style.AppTheme);
+
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Registering Data...");
         progressDialog.show();

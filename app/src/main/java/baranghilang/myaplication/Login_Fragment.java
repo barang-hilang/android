@@ -1,5 +1,6 @@
 package baranghilang.myaplication;
 
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -20,10 +21,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,6 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -46,6 +50,7 @@ import java.util.regex.Pattern;
 
 import baranghilang.myaplication.BottomBarNavigationMenu.MainMenuActivity;
 import baranghilang.myaplication.model.UserModel;
+
 
 
 /**
@@ -278,7 +283,9 @@ public class Login_Fragment extends Fragment implements
             }
         };
         request_json.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         progressDialog = new ProgressDialog(this.getContext(), R.style.AppTheme);
+
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Getting Data...");
         progressDialog.show();

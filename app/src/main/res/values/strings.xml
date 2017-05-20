@@ -3,6 +3,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="email">Email</string>
+
     <string name="passowrd">Kata Sandi</string>
     <string name="login">MASUK</string>
     <string name="show_pwd">Tampilkan Kata Sandi</string>
