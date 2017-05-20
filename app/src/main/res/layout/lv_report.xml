@@ -1,0 +1,83 @@
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/viewPagerReport"
+    android:layout_width="match_parent"
+    android:overScrollMode="never"
+    android:layout_height="100dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/primaryContentCardViewReport"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="4dp"
+        android:layout_margin="2dp"
+        card_view:cardElevation="2dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:paddingEnd="5dp">
+
+        <ImageView
+            android:id="@+id/imgFotoBarang"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/ic_icon_24dp"/>
+
+        <TextView
+            android:id="@+id/tvNamaBarang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_toRightOf="@+id/imgFotoBarang"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="77dp"
+            android:text="demo"
+            android:typeface="sans"
+          />
+
+        <TextView
+            android:id="@+id/tvDeskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNamaBarang"
+            android:layout_toRightOf="@+id/imgFotoBarang"
+            android:layout_gravity="left"
+            android:layout_marginLeft="77dp"
+            android:layout_marginTop="28dp"
+            android:text="demo"
+            android:typeface="sans"
+        />
+
+
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/secondaryContentFrameLayoutReport"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Ubah" />
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Ditemukan" />
+
+
+
+    </LinearLayout>
+    <!--</LinearLayout>-->
+</android.support.v4.view.ViewPager>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"   android:id="@+id/detail_layout">
+
+    <ImageView
+        android:id="@+id/imgFotobrg"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/ic_icon_24dp"/>
+
+    <TextView
+        android:id="@+id/tvNamabrg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_toRightOf="@+id/imgFotoBarang"
+        android:textStyle="bold"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="175dp"
+        android:text="Nama Barang"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvDeskripsi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_toRightOf="@+id/imgFotoBarang"
+        android:layout_below="@+id/tvNamaBarang"
+
+        android:layout_marginTop="45dp"
+        android:layout_marginLeft="175dp"
+        android:text="Deskripsi Barang"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvLokasiHilang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+
+        android:layout_below="@+id/imgFotoBarang"
+
+        android:layout_marginTop="180dp"
+        android:layout_marginLeft="20dp"
+        android:text="Lokasi Hilang :"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvTanggalHilang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+
+        android:layout_below="@+id/tvLokasiHilang"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="20dp"
+        android:text="Tanggal Hilang :"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvJamHilang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+
+        android:layout_below="@+id/tvTanggalHilang"
+
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="20dp"
+        android:text="Jam Hilang :"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvHub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+
+        android:layout_below="@+id/tvTanggalHilang"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:text="Pelapor :"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvNamaPelapor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+
+        android:layout_below="@+id/tvHub"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:text="NamaPelapor"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvNoTelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+
+        android:layout_below="@+id/tvNamaPelapor"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:text="NoTelp"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_toRightOf="@+id/tvNoTelp"
+        android:layout_below="@+id/tvNamaPelapor"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:text="Email"
+        android:typeface="sans"
+        android:textSize="17dp"
+        />
+
+
+
+
+
+    <EditText
+        android:id="@+id/edLokasiDitemukan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_below="@+id/tvNoTelp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/locationsss"
+        android:drawablePadding="8dp"
+
+        android:hint="Lokasi ditemukan"
+
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
+    <EditText
+        android:id="@+id/dtTanggalDitemukan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/dates"
+        android:layout_below="@+id/edLokasiDitemukan"
+        android:drawablePadding="8dp"
+
+        android:hint="Tanggal ditemukan"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp"
+        android:focusable="false"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_centerHorizontal="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
+
+    <Button
+        android:id="@+id/btnTemukan"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="17dp"
+        android:background="@drawable/foundbutton_selector"
+        android:padding="10dp"
+        android:text="SAYA MENEMUKANNYA"
+        android:textColor="@color/white_greyish"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/dtTanggalDitemukan"
+        android:onClick="eventBtnFood1" />
+
+    <TextView
+        android:id="@+id/tvBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/btnTemukan"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="KEMBALI"
+        android:textColor="#959595"
+        android:textSize="15sp" />
+</RelativeLayout>

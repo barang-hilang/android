@@ -7,20 +7,20 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-class ViewPagerAdapter extends PagerAdapter {
+class ViewPagerAdapterReport extends PagerAdapter {
 
     public Object instantiateItem(ViewGroup collection, int position) {
 
-        int resId = 0;
+        int resId2 = 0;
         switch (position) {
             case 0:
-                resId = R.id.primaryContentCardView;
+                resId2 = R.id.primaryContentCardViewReport;
                 break;
             case 1:
-                resId = R.id.secondaryContentFrameLayout;
+                resId2 = R.id.secondaryContentFrameLayoutReport;
                 break;
         }
-        return collection.findViewById(resId);
+        return collection.findViewById(resId2);
     }
 
     @Override

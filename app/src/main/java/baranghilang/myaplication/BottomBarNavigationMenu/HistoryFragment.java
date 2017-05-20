@@ -9,16 +9,15 @@ import android.view.ViewGroup;
 
 import baranghilang.myaplication.R;
 
-
 /**
- * Created by CMDDJ on 5/8/2017.
+ * Created by CMDDJ on 5/20/2017.
  */
-public class MyInfoFragment  extends Fragment {
+public class HistoryFragment extends Fragment {
     @Nullable
     @Override
 
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View v= inflater.inflate(R.layout.activity_myinfo, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_rcycl_timeline, container, false);
         return v;
     }
 }
