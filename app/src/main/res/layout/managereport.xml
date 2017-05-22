@@ -13,7 +13,7 @@
         android:gravity="center"
         android:padding="10dp"
 
-        android:text="LAPORAN BARU"
+        android:text="KELOLA LAPORAN"
         android:textColor="#0288D1"
         android:textSize="25sp"
         android:textStyle="bold" />
@@ -56,37 +56,6 @@
         android:textColor="@color/black"
         android:textColorHint="#959595"
         android:textSize="16sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/white_greyish" />
-
-    <EditText
-        android:id="@+id/edJumlah"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/jumlah"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="Jumlah"
-        android:inputType="number"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/black"
-        android:textColorHint="#959595"
-        android:textSize="16sp" />
-
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/white_greyish" />
-
-
 
     <View
         android:layout_width="match_parent"
@@ -163,16 +132,16 @@
         android:background="@color/white_greyish" />
 
     <Button
-        android:id="@+id/publish"
+        android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="15dp"
-        android:background="@drawable/publishbutton_selector"
+        android:background="@drawable/managebutton_selector"
         android:padding="3dp"
 
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:text="PUBLIKASIKAN"
+        android:text="UBAH"
 
         android:textColor="@color/white_greyish"
         android:textSize="17sp"
@@ -187,7 +156,7 @@
         android:gravity="center"
         android:padding="10dp"
 
-        android:text="BATALKAN"
+        android:text="KEMBALI"
 
         android:textColor="#959595"
         android:textSize="15sp" />
