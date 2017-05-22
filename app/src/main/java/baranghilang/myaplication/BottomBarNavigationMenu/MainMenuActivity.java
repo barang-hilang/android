@@ -1,15 +1,31 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 import baranghilang.myaplication.MainActivity;
 import baranghilang.myaplication.R;
@@ -19,6 +35,7 @@ import baranghilang.myaplication.model.UserModel;
 public class MainMenuActivity extends ActionBarActivity {
     public static UserModel userModel;
     BottomBar mBottomBar;
+
 
     @Override
     public void onBackPressed() {
@@ -98,4 +115,6 @@ public class MainMenuActivity extends ActionBarActivity {
 
 
     }
+
+
 }
