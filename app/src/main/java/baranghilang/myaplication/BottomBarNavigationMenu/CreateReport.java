@@ -2,29 +2,44 @@ package baranghilang.myaplication.BottomBarNavigationMenu;
 
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import baranghilang.myaplication.CustomToast;
 import baranghilang.myaplication.R;
 
 /**
@@ -34,7 +49,8 @@ public class CreateReport extends Fragment  implements
         View.OnClickListener {
 
     public static final int DATE_DIALOG_ID = 0;
-
+    private ProgressDialog progressDialog = null;
+    private static Spinner spinner;
     private static Button btnPublish;
     private static TextView btnCancel;
     private static EditText edNmBrg, edKet,edJumlah, edLok, edTgl, edUrl;
@@ -48,6 +64,7 @@ public class CreateReport extends Fragment  implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v= inflater.inflate(R.layout.createnewreport, container, false);
 
+        spinner = (Spinner) v.findViewById(R.id.spinnerChoice);
         btnPublish = (Button) v.findViewById(R.id.publish);
         btnCancel = (TextView) v.findViewById(R.id.tvCancel);
 
@@ -57,6 +74,20 @@ public class CreateReport extends Fragment  implements
         edLok = (EditText) v.findViewById(R.id.edLokasiHilang);
         edUrl = (EditText) v.findViewById(R.id.edUrlImage);
         edTgl = (EditText) v.findViewById(R.id.dtTanggalHilang);
+
+        List<String> myArraySpinner = new ArrayList<String>();
+
+        myArraySpinner.add("Elektronik");
+        myArraySpinner.add("Keperluan Pribadi");
+        myArraySpinner.add("Uang");
+        myArraySpinner.add("Surat");
+        myArraySpinner.add("Kendaraan");
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.spinner_item, myArraySpinner);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down vieww
+
+        spinner.setAdapter(spinnerArrayAdapter);
+
         edTgl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,5 +143,63 @@ public class CreateReport extends Fragment  implements
                 Cancel();
                 break;
         }
+    }
+
+    private void registerBarangAndPelaporan(String email,String password){
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url = "http://barang-hilang.azurewebsites.net/api/v1/pelaporan/";
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("email",email);
+        params.put("password",password);
+
+        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            //Process os success response
+                            JSONArray result = response.getJSONArray("result");
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Register Pelaporan Success!", Toast.LENGTH_SHORT)
+                                    .show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            progressDialog.dismiss();
+                            new CustomToast().Show_Toast(getActivity(), getView(),
+                                    "Sorry, please insert correctly, "+e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                progressDialog.dismiss();
+                new CustomToast().Show_Toast(getActivity(), getView(),
+                        error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("apiKey","wakowakowakowa");
+                header.put("Content-Type", "application/json");
+                return header ;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        request_json.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        progressDialog = new ProgressDialog(getActivity().getApplicationContext(), R.style.AppTheme);
+
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Getting Data...");
+        progressDialog.show();
+        queue.add(request_json);
     }
 }

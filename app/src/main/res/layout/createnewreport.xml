@@ -40,6 +40,29 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/desc"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp"
+        android:id="@+id/spinnerChoice"
+        >
+
+    </Spinner>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
     <EditText
         android:id="@+id/edKeterangan"
         android:layout_width="match_parent"
