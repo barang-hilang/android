@@ -54,9 +54,9 @@ public class ProfileFragment extends Fragment  implements
     }
 
     public void Edit(){
-        if(btnEdit.getText()=="EDIT") {
-            btnEdit.setText("SAVE");
-            btnLogOut.setText("CANCEL");
+        if(btnEdit.getText()=="UBAH") {
+            btnEdit.setText("SIMPAN");
+            btnLogOut.setText("BATAL");
             edName.setFocusable(true);
             edMail.setFocusable(true);
             edPass.setFocusable(true);
@@ -67,9 +67,9 @@ public class ProfileFragment extends Fragment  implements
     }
 
     public void Save(){
-        if(btnEdit.getText()=="SAVE") {
-            btnEdit.setText("EDIT");
-            btnLogOut.setText("LOG OUT");
+        if(btnEdit.getText()=="SIMPAN") {
+            btnEdit.setText("UBAH");
+            btnLogOut.setText("KELUAR");
             edName.setFocusable(false);
             edMail.setFocusable(false);
             edPass.setFocusable(false);
@@ -90,19 +90,19 @@ public class ProfileFragment extends Fragment  implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit:
-                if(btnEdit.getText()=="EDIT") {
+                if(btnEdit.getText()=="UBAH") {
                     Edit();
                 }
-                else if(btnEdit.getText()=="SAVE")
+                else if(btnEdit.getText()=="SIMPAN")
                 {
                     Save();
                 }
                 break;
             case R.id.tvLogOut:
-                if(btnLogOut.getText()=="CANCEL") {
+                if(btnLogOut.getText()=="BATAL") {
                     Cancel();
                 }
-                else if(btnLogOut.getText()=="LOG OUT")
+                else if(btnLogOut.getText()=="KELUAR")
                 {
                     LogOut();
                 }
