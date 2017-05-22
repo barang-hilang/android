@@ -23,13 +23,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import baranghilang.myaplication.CustomToast;
 import baranghilang.myaplication.R;
+import baranghilang.myaplication.model.BarangModel;
+import baranghilang.myaplication.model.PelaporanModel;
 
 /**
  * Created by CMDDJ on 5/13/2017.
  */
 public class DetailReport extends AppCompatActivity  {
+    public static PelaporanModel pelaporanModel;
+    public static BarangModel barangModel;
 
     private static final int DIALOG1 = 1;
     private static final int DIALOG2 = 2;
@@ -39,6 +42,7 @@ public class DetailReport extends AppCompatActivity  {
     ProgressDialog progDialog;
     private EditText edLok, edTgl;
     private RelativeLayout detailLayout;
+    private TextView nama,detail,lokasi,tanggal,jam,namaPelapor;
     private static Animation shakeAnimation;
     Calendar c = Calendar.getInstance();
     String myFormat;
@@ -48,6 +52,20 @@ public class DetailReport extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_report);
+
+        nama = (TextView) findViewById(R.id.tvNamabrg);
+        detail = (TextView) findViewById(R.id.tvDeskripsi);
+        lokasi = (TextView) findViewById(R.id.tvLokasiHilang);
+        tanggal = (TextView) findViewById(R.id.tvTanggalHilang);
+        jam = (TextView) findViewById(R.id.tvJamHilang);
+        namaPelapor = (TextView) findViewById(R.id.tvNamaPelapor);
+
+        nama.setText(barangModel.getNamaBarang());
+        detail.setText(pelaporanModel.getKeterangan());
+        lokasi.setText(pelaporanModel.getLokHilang());
+        tanggal.setText(pelaporanModel.getTglHilang());
+        jam.setText(pelaporanModel.getTglHilang());
+        namaPelapor.setText(MainMenuActivity.userModel.getUsername());
 
         detailLayout = (RelativeLayout) findViewById(R.id.detail_layout);
         btnFound = (Button) findViewById(R.id.btnTemukan);
@@ -71,6 +89,8 @@ public class DetailReport extends AppCompatActivity  {
         // Load ShakeAnimation
         shakeAnimation = AnimationUtils.loadAnimation(this,
                 R.anim.shake);
+
+
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {

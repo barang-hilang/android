@@ -3,7 +3,6 @@ package baranghilang.myaplication.BottomBarNavigationMenu;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnMenuTabClickListener;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
-import baranghilang.myaplication.Login_Fragment;
 import baranghilang.myaplication.MainActivity;
 import baranghilang.myaplication.R;
 
@@ -52,6 +48,11 @@ public class ProfileFragment extends Fragment  implements
         edHp.setEnabled(false);
         edAddresses.setEnabled(false);
 
+        edName.setText(MainMenuActivity.userModel.getUsername());
+        edMail.setText(MainMenuActivity.userModel.getEmail());
+        edPass.setText(MainMenuActivity.userModel.getPassword());
+        edHp.setText(MainMenuActivity.userModel.getNoHp());
+        edAddresses.setText(MainMenuActivity.userModel.getAlamat());
         setListeners();
 
         return v;

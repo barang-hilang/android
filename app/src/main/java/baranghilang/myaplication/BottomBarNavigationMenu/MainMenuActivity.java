@@ -58,6 +58,7 @@ public class MainMenuActivity extends ActionBarActivity {
                     final TimelineFragment f = new TimelineFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
                     status=1;
+                    floatingActionButton.setVisibility(View.VISIBLE);
                     floatingActionButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -71,6 +72,7 @@ public class MainMenuActivity extends ActionBarActivity {
                     final ReportFragment f = new ReportFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
                     status=2;
+                    floatingActionButton.setVisibility(View.VISIBLE);
                     floatingActionButton.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -84,11 +86,13 @@ public class MainMenuActivity extends ActionBarActivity {
                     CreateReport f = new CreateReport();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
                     status=3;
+                    floatingActionButton.setVisibility(View.INVISIBLE);
                 }
                 else if(i==R.id.history)
                 {
                     HistoryFragment f = new HistoryFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
+                    floatingActionButton.setVisibility(View.VISIBLE);
                     status=4;
                 }
                 else if(i==R.id.Profile)
@@ -96,6 +100,7 @@ public class MainMenuActivity extends ActionBarActivity {
                     ProfileFragment f = new ProfileFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
                     status=5;
+                    floatingActionButton.setVisibility(View.INVISIBLE);
                 }
 
             }

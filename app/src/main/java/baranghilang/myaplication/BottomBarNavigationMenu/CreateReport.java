@@ -3,10 +3,10 @@ package baranghilang.myaplication.BottomBarNavigationMenu;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +20,13 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -49,11 +52,12 @@ public class CreateReport extends Fragment  implements
         View.OnClickListener {
 
     public static final int DATE_DIALOG_ID = 0;
-    private ProgressDialog progressDialog = null;
     private static Spinner spinner;
     private static Button btnPublish;
     private static TextView btnCancel;
     private static EditText edNmBrg, edKet,edJumlah, edLok, edTgl, edUrl;
+    private String lastIdBarang="";
+
     Calendar c = Calendar.getInstance();
     String myFormat;
     SimpleDateFormat sdf;
@@ -122,6 +126,9 @@ public class CreateReport extends Fragment  implements
     }
 
     public void Publish(){
+        registerBarang();
+        getLastIdBarang();
+        registerPelaporan();
         Toast.makeText(getActivity(), "Report published!", Toast.LENGTH_SHORT)
                 .show();
         Intent intent = new Intent(getActivity(), MainMenuActivity.class);
@@ -145,39 +152,45 @@ public class CreateReport extends Fragment  implements
         }
     }
 
-    private void registerBarangAndPelaporan(String email,String password){
+    private void registerBarang(){
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String url = "http://barang-hilang.azurewebsites.net/api/v1/pelaporan/";
+        String url = "http://barang-hilang.azurewebsites.net/api/v1/barang/";
 
         Map<String,String> params = new HashMap<String, String>();
-        params.put("email",email);
-        params.put("password",password);
+        params.put("idKategoriBarang",String.valueOf(spinner.getSelectedItemPosition()+1));
+        params.put("idUserPemilik",MainMenuActivity.userModel.getIdUser());
+        params.put("nama",edNmBrg.getText().toString());
+        params.put("status","Lost");
+        params.put("url_image","");
+        params.put("jumlahBarang",edJumlah.getText().toString());
+
 
         JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
+//                        try {
                             //Process os success response
-                            JSONArray result = response.getJSONArray("result");
-                            progressDialog.dismiss();
+//                            JSONArray result = response.getJSONArray("result");
+
                             Toast.makeText(getActivity(), "Register Pelaporan Success!", Toast.LENGTH_SHORT)
                                     .show();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            progressDialog.dismiss();
-                            new CustomToast().Show_Toast(getActivity(), getView(),
-                                    "Sorry, please insert correctly, "+e.getMessage());
-                        }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//
+//                            new CustomToast().Show_Toast(getActivity(), getView(),
+//                                    "Sorry, please insert correctly, "+e.getMessage());
+//                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                progressDialog.dismiss();
+
                 new CustomToast().Show_Toast(getActivity(), getView(),
                         error.toString());
+                Log.e("Error : ",error.toString()+" "+error.getMessage());
             }
         }){
             @Override
@@ -195,11 +208,102 @@ public class CreateReport extends Fragment  implements
         };
         request_json.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        progressDialog = new ProgressDialog(getActivity().getApplicationContext(), R.style.AppTheme);
+        Toast.makeText(getActivity().getApplicationContext(),"Please wait a while",Toast.LENGTH_LONG).show();
+        queue.add(request_json);
+    }
 
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Getting Data...");
-        progressDialog.show();
+    public void getLastIdBarang(){
+        RequestQueue requestQueueActive = Volley.newRequestQueue(getActivity());
+        StringRequest endpointActive = new StringRequest(Request.Method.GET, "http://barang-hilang.azurewebsites.net/api/v1/barang",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject result = new JSONObject(response);
+                            JSONArray results = result.getJSONArray("result");
+                            for (int i = 0; i < results.length(); i++) {
+                                if(results.getJSONObject(i).getJSONObject("user").getString("email")
+                                        .equalsIgnoreCase(MainMenuActivity.userModel.getEmail())){
+                                    lastIdBarang=results.getJSONObject(i).getString("idBarang");
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/json");
+                params.put("apiKey","wakowakowakowa");
+                return params;
+            }
+        };
+        Toast.makeText(getActivity().getApplicationContext(),"Please wait a while",Toast.LENGTH_LONG).show();
+        requestQueueActive.add(endpointActive);
+
+    }
+
+    private void registerPelaporan(){
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        String url = "http://barang-hilang.azurewebsites.net/api/v1/pelaporan/";
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("idBarang",lastIdBarang);
+        params.put("idPelapor",MainMenuActivity.userModel.getIdUser());
+        params.put("tempatHilang",edLok.getText().toString());
+//        params.put("tanggalHilang",edTgl.getText().toString().);
+        params.put("tanggalHilang",new Date().toString());
+        params.put("keterangan",edKet.getText().toString());
+
+
+        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                            Toast.makeText(getActivity(), "Register Pelaporan Success!", Toast.LENGTH_SHORT)
+                                    .show();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                new CustomToast().Show_Toast(getActivity(), getView(),
+                        error.toString());
+                Log.e("Error : ",error.toString()+" "+error.getMessage());
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<String, String>();
+                header.put("apiKey","wakowakowakowa");
+                header.put("Content-Type", "application/json");
+                return header ;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        request_json.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        Toast.makeText(getActivity().getApplicationContext(),"Registering .....",Toast.LENGTH_LONG).show();
         queue.add(request_json);
     }
 }

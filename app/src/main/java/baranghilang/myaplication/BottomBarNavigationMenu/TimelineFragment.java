@@ -76,14 +76,16 @@ public class TimelineFragment extends Fragment  implements
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                DetailReport.barangModel=barangMod.get(position);
+                DetailReport.pelaporanModel=pelaporanMod.get(position);
                 Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-
+                DetailReport.barangModel=barangMod.get(position);
+                DetailReport.pelaporanModel=pelaporanMod.get(position);
                 Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }
@@ -273,7 +275,7 @@ public class TimelineFragment extends Fragment  implements
         ArrayList<String> tempNamaBarang = new ArrayList<>();
         ArrayList<String> tempKeterangan = new ArrayList<>();
         ArrayList<Integer> tempImage = new ArrayList<>();
-        for (int i = 0; i < totalData; i++) {
+        for (int i = 0; i < pelaporanMod.size(); i++) {
             tempImage.add(ic_icon_24dp);
             tempNamaBarang.add(barangMod.get(i).getNamaBarang());
             tempKeterangan.add(pelaporanMod.get(i).getKeterangan());
