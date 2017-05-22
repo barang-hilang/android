@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import java.util.Map;
 
 import baranghilang.myaplication.R;
 import baranghilang.myaplication.RecyclerViewAdapterTimeline;
+import baranghilang.myaplication.model.BarangModel;
 import baranghilang.myaplication.model.PelaporanModel;
 import baranghilang.myaplication.model.UserModel;
 
@@ -51,24 +53,25 @@ public class TimelineFragment extends Fragment  implements
     private static final int DIALOG1 = 1;
     private Button btnBagi;
 
-
+    ArrayList<UserModel> userMod = new ArrayList<>();
     ArrayList<PelaporanModel> pelaporanMod = new ArrayList<>();
+    ArrayList<BarangModel> barangMod = new ArrayList<>();
     public ProgressDialog progressDialog = null;
 
     private int[] mDemoDataSet0 = {R.drawable.ic_icon_24dp,
             R.drawable.ic_icon_24dp,
             R.drawable.ic_icon_24dp
     };
+//
+//    private String[] mDemoDataSet = {"Flashdisk 8GB",
+//            "HP VIVO F5"
+//    };
+//
+//    private String[] mDemoDataSet2 = {"warna hitam, merk toshiba",
+//            "Casing warna putihhhhhhhhhh"
+//    };
 
-    private String[] mDemoDataSet = {"Flashdisk 8GB",
-            "HP VIVO F5"
-    };
-
-    private String[] mDemoDataSet2 = {"warna hitam, merk toshiba",
-            "Casing warna putihhhhhhhhhh"
-    };
-
-
+    private String[] urlImage,namaBarang,keterangan;
 
     @Nullable
     @Override
@@ -76,6 +79,17 @@ public class TimelineFragment extends Fragment  implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v= inflater.inflate(R.layout.activity_rcycl_timeline, container, false);
 
+        getPelaporan();
+        setAdater();
+               
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabRefresh);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPelaporan();
+                setAdater();
+            }
+        });
 
        // btnBagi = (Button) v.findViewById(R.id.btnBagikan);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.rvTL);
@@ -83,7 +97,7 @@ public class TimelineFragment extends Fragment  implements
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         // mLayoutManager.
 
-        mAdapter = new RecyclerViewAdapterTimeline(mDemoDataSet0, mDemoDataSet, mDemoDataSet2);
+        mAdapter = new RecyclerViewAdapterTimeline(mDemoDataSet0,namaBarang,keterangan);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -170,27 +184,53 @@ public class TimelineFragment extends Fragment  implements
     }
 
 
-    public void getActiveOrderByEmail(){
-        RequestQueue requestQueueActive = Volley.newRequestQueue(this.getApplicationContext());
-        StringRequest endpointActive = new StringRequest(Request.Method.GET, "http://c-laundry.hol.es/api2/getOrders.php?email=",
+    public void getPelaporan(){
+        RequestQueue requestQueueActive = Volley.newRequestQueue(getActivity());
+        StringRequest endpointActive = new StringRequest(Request.Method.GET, "http://barang-hilang.azurewebsites.net/api/v1/pelaporan",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            pelaporanMod.clear();
                             userMod.clear();
+                            barangMod.clear();
                             JSONObject result = new JSONObject(response);
                             JSONArray results = result.getJSONArray("result");
                             for (int i = 0; i < results.length(); i++) {
+                                PelaporanModel pelaporan = new PelaporanModel();
                                 UserModel user = new UserModel();
-                                user.setIdUser(results.getJSONObject(i).getString("id_user"));
-                                user.setUsername(results.getJSONObject(i).getString("fullname"));
-                                user.setEmail(results.getJSONObject(i).getString("email"));
-                                user.setPassword(results.getJSONObject(i).getString("password"));
-                                user.setNoHp(results.getJSONObject(i).getString("noHp"));
-                                user.setIdDev(results.getJSONObject(i).getString("idDev"));
+                                BarangModel barang = new BarangModel();
+
+                                //Untuk Pelaporan
+                                pelaporan.setIdLapor(results.getJSONObject(i).getString("idPelaporan"));
+                                pelaporan.setIdPelapor(results.getJSONObject(i).getJSONObject("pelapor").getString("idUser"));
+                                pelaporan.setIdBarang(results.getJSONObject(i).getJSONObject("barang").getString("id_barang"));
+                                pelaporan.setKeterangan(results.getJSONObject(i).getString("keterangan"));
+                                pelaporan.setLokHilang(results.getJSONObject(i).getString("tempatHilang"));
+                                pelaporan.setTglHilang(results.getJSONObject(i).getString("tanggalHilang"));
+                                pelaporan.setLokDitemukan(results.getJSONObject(i).getString("tempatDitemukan"));
+                                pelaporan.setTglDitemukan(results.getJSONObject(i).getString("tanggalDitemukan"));
+                                pelaporan.setIdPenemu(results.getJSONObject(i).getJSONObject("penemu").getString("idUser"));
+
+                                //Untuk Pelapor
+                                user.setIdUser(results.getJSONObject(i).getJSONObject("pelapor").getString("idUser"));
+                                user.setUsername(results.getJSONObject(i).getJSONObject("pelapor").getString("username"));
+
+                                //Untuk Barang
+                                barang.setIdBarang(results.getJSONObject(i).getJSONObject("barang").getString("idBarang"));
+                                barang.setIdKateg(results.getJSONObject(i).getJSONObject("barang").getJSONObject("kategoriBarang").getString("idKategoriBarang"));
+                                barang.setIdUser(results.getJSONObject(i).getJSONObject("barang").getJSONObject("user").getString("idBarang"));
+                                barang.setJumlahBarang(results.getJSONObject(i).getJSONObject("barang").getString("jumlah"));
+                                barang.setNamaBarang(results.getJSONObject(i).getJSONObject("barang").getString("nama"));
+                                barang.setStatusBarang(results.getJSONObject(i).getJSONObject("barang").getString("status"));
+                                barang.setUrlImage(results.getJSONObject(i).getJSONObject("barang").getString("url_image"));
+
+                                pelaporanMod.add(pelaporan);
                                 userMod.add(user);
-                                for (UserModel modelUser: userMod) {
-                                    Log.e("Data : ",modelUser.toString());
+                                barangMod.add(barang);
+
+                                for (PelaporanModel modelPelaporan: pelaporanMod) {
+                                    Log.e("Data : ",modelPelaporan.toString());
                                 }
                             }
                         } catch (JSONException e) {
@@ -202,7 +242,7 @@ public class TimelineFragment extends Fragment  implements
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                     }
                 }){
@@ -216,13 +256,24 @@ public class TimelineFragment extends Fragment  implements
                 return super.getHeaders();
             }
         };
-        progressDialog = new ProgressDialog(this.getApplicationContext(),R.style.AppTheme);
+        progressDialog = new ProgressDialog(getActivity(),R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Getting Data");
         progressDialog.show();
 
         requestQueueActive.add(endpointActive);
 
+    }
+
+
+
+
+    private void setAdater(){
+        for (int i = 0; i < pelaporanMod.size(); i++) {
+            urlImage[i]=barangMod.get(i).getUrlImage();
+            namaBarang[i]=barangMod.get(i).getNamaBarang();
+            keterangan[i]=pelaporanMod.get(i).getKeterangan();
+        }
     }
 
 }
