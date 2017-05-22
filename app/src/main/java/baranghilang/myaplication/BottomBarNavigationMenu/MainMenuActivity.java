@@ -68,9 +68,16 @@ public class MainMenuActivity extends ActionBarActivity {
                 }
                 else if(i==R.id.Manage)
                 {
-                    ReportFragment f = new ReportFragment();
+                    final ReportFragment f = new ReportFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
                     status=2;
+                    floatingActionButton.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            f.getPelaporanByPelapor();
+                            f.setAdapter();
+                        }
+                    });
                 }
                 else if(i==R.id.newreport)
                 {

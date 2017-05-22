@@ -9,9 +9,9 @@
         android:id="@+id/fbRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|right"
         android:clickable="true"
-        app:fabSize="mini"
+        app:fabSize="normal"
         app:srcCompat="@drawable/refresh"/>
 
     <FrameLayout android:id="@+id/frame"
