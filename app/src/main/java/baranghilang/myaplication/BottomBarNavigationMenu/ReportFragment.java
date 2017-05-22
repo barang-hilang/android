@@ -3,6 +3,7 @@ package baranghilang.myaplication.BottomBarNavigationMenu;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,15 +85,15 @@ public class ReportFragment  extends Fragment implements
             @Override
             public void onClick(View view, int position) {
 
-//                Intent intent = new Intent(getActivity(), ManageReport.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), ManageReport.class);
+                startActivity(intent);
             }
 
             @Override
             public void onLongClick(View view, int position) {
 
-//                Intent intent = new Intent(getActivity(), ManageReport.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), ManageReport.class);
+                startActivity(intent);
             }
         }) );
 

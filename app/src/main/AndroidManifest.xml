@@ -20,6 +20,8 @@
 
         <activity android:name=".BottomBarNavigationMenu.DetailReport"/>
 
+        <activity android:name=".BottomBarNavigationMenu.ManageReport"/>
+
     </application>
 
 </manifest>
