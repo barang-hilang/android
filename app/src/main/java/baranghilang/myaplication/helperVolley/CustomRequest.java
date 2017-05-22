@@ -1,11 +1,17 @@
 package baranghilang.myaplication.helperVolley;
 
+<<<<<<< HEAD
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+=======
+/**
+ * Created by D on 19-May-17.
+ */
+>>>>>>> 10adb72208d1c8bc9d55532239eb0527b6ad3969
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -19,9 +25,12 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
 
+<<<<<<< HEAD
 /**
  * Created by CMDDJ on 5/20/2017.
  */
+=======
+>>>>>>> 10adb72208d1c8bc9d55532239eb0527b6ad3969
 public class CustomRequest extends Request<JSONObject> {
 
     private Listener<JSONObject> listener;
@@ -65,4 +74,8 @@ public class CustomRequest extends Request<JSONObject> {
         // TODO Auto-generated method stub
         listener.onResponse(response);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 10adb72208d1c8bc9d55532239eb0527b6ad3969

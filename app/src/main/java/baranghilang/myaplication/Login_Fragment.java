@@ -1,5 +1,17 @@
 package baranghilang.myaplication;
 
+<<<<<<< HEAD
+=======
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import baranghilang.myaplication.BottomBarNavigationMenu.MainMenuActivity;
+import baranghilang.myaplication.helperVolley.CustomRequest;
+import baranghilang.myaplication.model.UserModel;
+
+>>>>>>> 10adb72208d1c8bc9d55532239eb0527b6ad3969
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -46,6 +58,21 @@ import java.util.regex.Pattern;
 
 import baranghilang.myaplication.BottomBarNavigationMenu.MainMenuActivity;
 import baranghilang.myaplication.model.UserModel;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -245,7 +272,10 @@ public class Login_Fragment extends Fragment implements
                             Toast.makeText(getActivity(), "Login success!", Toast.LENGTH_SHORT)
                                     .show();
                             MainMenuActivity.userModel=userModel;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 10adb72208d1c8bc9d55532239eb0527b6ad3969
                             Intent intent = new Intent(getActivity(), MainMenuActivity.class);
                             startActivity(intent);
                         } catch (JSONException e) {
@@ -278,7 +308,11 @@ public class Login_Fragment extends Fragment implements
             }
         };
         request_json.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+<<<<<<< HEAD
         progressDialog = new ProgressDialog(this.getContext(), R.style.AppTheme);
+=======
+        progressDialog = new ProgressDialog(this.getContext(),R.style.AppTheme);
+>>>>>>> 10adb72208d1c8bc9d55532239eb0527b6ad3969
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Getting Data...");
         progressDialog.show();
