@@ -1,10 +1,13 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,9 +16,27 @@ import android.view.ViewGroup;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 import baranghilang.myaplication.R;
 import baranghilang.myaplication.RecyclerViewAdapterTimeline;
+import baranghilang.myaplication.model.PelaporanModel;
+import baranghilang.myaplication.model.UserModel;
 
 
 /**
@@ -29,6 +50,10 @@ public class TimelineFragment extends Fragment  implements
     private RecyclerView.LayoutManager mLayoutManager;
     private static final int DIALOG1 = 1;
     private Button btnBagi;
+
+
+    ArrayList<PelaporanModel> pelaporanMod = new ArrayList<>();
+    public ProgressDialog progressDialog = null;
 
     private int[] mDemoDataSet0 = {R.drawable.ic_icon_24dp,
             R.drawable.ic_icon_24dp,
@@ -72,12 +97,14 @@ public class TimelineFragment extends Fragment  implements
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+
                 Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }
 
             @Override
             public void onLongClick(View view, int position) {
+
                 Intent intent = new Intent(getActivity(), DetailReport.class);
                 startActivity(intent);
             }
@@ -142,5 +169,60 @@ public class TimelineFragment extends Fragment  implements
 
     }
 
+
+    public void getActiveOrderByEmail(){
+        RequestQueue requestQueueActive = Volley.newRequestQueue(this.getApplicationContext());
+        StringRequest endpointActive = new StringRequest(Request.Method.GET, "http://c-laundry.hol.es/api2/getOrders.php?email=",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            userMod.clear();
+                            JSONObject result = new JSONObject(response);
+                            JSONArray results = result.getJSONArray("result");
+                            for (int i = 0; i < results.length(); i++) {
+                                UserModel user = new UserModel();
+                                user.setIdUser(results.getJSONObject(i).getString("id_user"));
+                                user.setUsername(results.getJSONObject(i).getString("fullname"));
+                                user.setEmail(results.getJSONObject(i).getString("email"));
+                                user.setPassword(results.getJSONObject(i).getString("password"));
+                                user.setNoHp(results.getJSONObject(i).getString("noHp"));
+                                user.setIdDev(results.getJSONObject(i).getString("idDev"));
+                                userMod.add(user);
+                                for (UserModel modelUser: userMod) {
+                                    Log.e("Data : ",modelUser.toString());
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        progressDialog.dismiss();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+        progressDialog = new ProgressDialog(this.getApplicationContext(),R.style.AppTheme);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Getting Data");
+        progressDialog.show();
+
+        requestQueueActive.add(endpointActive);
+
+    }
 
 }

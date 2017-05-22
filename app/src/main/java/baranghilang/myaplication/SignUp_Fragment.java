@@ -1,17 +1,10 @@
 package baranghilang.myaplication;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -31,11 +23,15 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import baranghilang.myaplication.BottomBarNavigationMenu.MainMenuActivity;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import baranghilang.myaplication.model.UserModel;
 
 /**
@@ -220,7 +216,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             }
         };
         request_json.setRetryPolicy(new DefaultRetryPolicy( 5000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        progressDialog = new ProgressDialog(this.getContext(),R.style.AppTheme);
+        progressDialog = new ProgressDialog(this.getContext(), R.style.AppTheme);
+
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Registering Data...");
         progressDialog.show();

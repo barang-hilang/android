@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+
     android:layout_height="match_parent"   android:id="@+id/detail_layout">
 
     <ImageView
@@ -134,6 +135,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
+
         android:layout_toRightOf="@+id/tvNoTelp"
         android:layout_below="@+id/tvNamaPelapor"
 
@@ -143,7 +145,6 @@
         android:typeface="sans"
         android:textSize="17dp"
         />
-
 
 
 
@@ -206,11 +207,13 @@
         android:layout_marginLeft="17dp"
         android:background="@drawable/foundbutton_selector"
         android:padding="10dp"
+
         android:text="SAYA MENEMUKANNYA"
         android:textColor="@color/white_greyish"
         android:textSize="17sp"
         android:textStyle="bold"
         android:layout_below="@+id/dtTanggalDitemukan"
+
         android:onClick="eventBtnFood1" />
 
     <TextView
@@ -222,7 +225,9 @@
         android:layout_marginTop="7dp"
         android:gravity="center"
         android:padding="10dp"
+
         android:text="KEMBALI"
+
         android:textColor="#959595"
         android:textSize="15sp" />
 </RelativeLayout>

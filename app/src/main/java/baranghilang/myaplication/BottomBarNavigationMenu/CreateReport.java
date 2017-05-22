@@ -1,12 +1,15 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ import baranghilang.myaplication.R;
  */
 public class CreateReport extends Fragment  implements
         View.OnClickListener {
+
     public static final int DATE_DIALOG_ID = 0;
 
     private static Button btnPublish;
@@ -40,11 +44,13 @@ public class CreateReport extends Fragment  implements
 
     @Nullable
     @Override
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v= inflater.inflate(R.layout.createnewreport, container, false);
 
         btnPublish = (Button) v.findViewById(R.id.publish);
         btnCancel = (TextView) v.findViewById(R.id.tvCancel);
+
         edNmBrg = (EditText) v.findViewById(R.id.edNamaBarang);
         edKet = (EditText) v.findViewById(R.id.edKeterangan);
         edLok = (EditText) v.findViewById(R.id.edLokasiHilang);

@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="10dp"
+
         android:text="PROFIL SAYA"
+
         android:textColor="#B71C1C"
         android:textSize="25sp"
         android:textStyle="bold" />
@@ -26,6 +28,7 @@
         android:drawableLeft="@drawable/users"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
+
         android:hint="Nama Lengkap"
         android:inputType="textCapWords"
         android:padding="10dp"
@@ -97,6 +100,7 @@
         android:drawableLeft="@drawable/mobile"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
+
         android:hint="No. Telepon"
         android:inputType="phone"
         android:padding="10dp"
@@ -120,6 +124,7 @@
         android:drawableLeft="@drawable/locations"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
+
         android:hint="Alamat"
         android:inputType="textMultiLine"
         android:padding="10dp"
@@ -141,11 +146,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="15dp"
+
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/suntingprofilebutton_selector"
         android:padding="3dp"
         android:text="UBAH"
+
         android:textColor="@color/white_greyish"
         android:textSize="17sp"
         android:textStyle="bold" />
@@ -159,6 +166,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="KELUAR"
+
         android:textColor="#959595"
         android:textSize="15sp" />
 

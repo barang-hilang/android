@@ -31,7 +31,6 @@ public class RecyclerViewAdapterTimeline extends RecyclerView.Adapter<RecyclerVi
 
     private List<SwipedState> mItemSwipedStates;
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public View mView;
@@ -41,6 +40,7 @@ public class RecyclerViewAdapterTimeline extends RecyclerView.Adapter<RecyclerVi
             mView = v;
         }
     }
+
 
     public RecyclerViewAdapterTimeline(int[] dataSet0, String[] dataSet, String[] dataSet2) {
         mDataset0 = dataSet0;
@@ -55,6 +55,7 @@ public class RecyclerViewAdapterTimeline extends RecyclerView.Adapter<RecyclerVi
     @Override
     public RecyclerViewAdapterTimeline.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                              int viewType) {
+
 
         ViewPager v = (ViewPager) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.lv_barang, parent, false);
@@ -81,6 +82,7 @@ public class RecyclerViewAdapterTimeline extends RecyclerView.Adapter<RecyclerVi
 
         Log.i("MyAdapter", "PagePosition " + position + " set to " + mItemSwipedStates.get(position).ordinal());
         ((ViewPager) holder.mView).setCurrentItem(mItemSwipedStates.get(position).ordinal());
+
 
        ((ViewPager) holder.mView).setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             int previousPagePosition = 0;
