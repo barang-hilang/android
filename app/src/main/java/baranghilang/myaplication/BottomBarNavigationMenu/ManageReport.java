@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,7 +45,7 @@ public class ManageReport extends Fragment implements
 
         edNmBrg = (EditText) v.findViewById(R.id.edNamaBarang);
         edKet = (EditText) v.findViewById(R.id.edKeterangan);
-        edJumlah = (EditText) v.findViewById(R.id.edJumlah);
+//        edJumlah = (EditText) v.findViewById(R.id.edJumlah);
         edLok = (EditText) v.findViewById(R.id.edLokasiHilang);
         edUrl = (EditText) v.findViewById(R.id.edUrlImage);
         edTgl = (EditText) v.findViewById(R.id.dtTanggalHilang);

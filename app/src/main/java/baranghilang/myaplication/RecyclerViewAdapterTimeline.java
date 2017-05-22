@@ -47,8 +47,10 @@ public class RecyclerViewAdapterTimeline extends RecyclerView.Adapter<RecyclerVi
         mDataset = dataSet;
         mDataset2 = dataSet2;
         mItemSwipedStates = new ArrayList<>();
-        for (int i = 0; i < dataSet.length && i < dataSet2.length; i++) {
-            mItemSwipedStates.add(i, SwipedState.SHOWING_PRIMARY_CONTENT1);
+        if(dataSet!=null&&dataSet2!=null) {
+            for (int i = 0; i < dataSet.length && i < dataSet2.length; i++) {
+                mItemSwipedStates.add(i, SwipedState.SHOWING_PRIMARY_CONTENT1);
+            }
         }
     }
 
@@ -120,7 +122,9 @@ public class RecyclerViewAdapterTimeline extends RecyclerView.Adapter<RecyclerVi
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        if(mDataset!=null)
+            return mDataset.length;
+        return 0;
     }
 
 
