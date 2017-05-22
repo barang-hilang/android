@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import baranghilang.myaplication.R;
@@ -184,7 +185,10 @@ public class ReportFragment  extends Fragment implements
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/json");
+                params.put("apiKey","wakowakowakowa");
+                return params;
             }
         };
         progressDialog = new ProgressDialog(getActivity().getApplicationContext(),R.style.AppTheme);

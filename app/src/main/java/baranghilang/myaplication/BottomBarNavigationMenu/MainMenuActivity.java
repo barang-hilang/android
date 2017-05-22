@@ -1,31 +1,17 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 import baranghilang.myaplication.MainActivity;
 import baranghilang.myaplication.R;
@@ -35,7 +21,8 @@ import baranghilang.myaplication.model.UserModel;
 public class MainMenuActivity extends ActionBarActivity {
     public static UserModel userModel;
     BottomBar mBottomBar;
-
+    public FloatingActionButton floatingActionButton;
+    private int status=0;
 
     @Override
     public void onBackPressed() {
@@ -60,39 +47,48 @@ public class MainMenuActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menumain);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fbRefresh);
+
         mBottomBar =  BottomBar.attach(this, savedInstanceState);
         mBottomBar.setItemsFromMenu(R.menu.menu_main, new OnMenuTabClickListener() {
             @Override
             public void onMenuTabSelected(@IdRes int i) {
                 if(i==R.id.timeline)
                 {
-                    TimelineFragment f = new TimelineFragment();
+                    final TimelineFragment f = new TimelineFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
+                    status=1;
+                    floatingActionButton.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            f.getPelaporan();
+                            f.setAdapter();
+                        }
+                    });
                 }
                 else if(i==R.id.Manage)
                 {
                     ReportFragment f = new ReportFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
-
+                    status=2;
                 }
                 else if(i==R.id.newreport)
                 {
                     CreateReport f = new CreateReport();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
-
+                    status=3;
                 }
                 else if(i==R.id.history)
                 {
-
-                   HistoryFragment f = new HistoryFragment();
+                    HistoryFragment f = new HistoryFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
-
+                    status=4;
                 }
                 else if(i==R.id.Profile)
                 {
                     ProfileFragment f = new ProfileFragment();
                     getFragmentManager().beginTransaction().replace(R.id.frame, f).commit();
-
+                    status=5;
                 }
 
             }

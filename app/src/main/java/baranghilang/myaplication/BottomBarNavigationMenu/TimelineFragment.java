@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import baranghilang.myaplication.R;
@@ -39,6 +39,8 @@ import baranghilang.myaplication.RecyclerViewAdapterTimeline;
 import baranghilang.myaplication.model.BarangModel;
 import baranghilang.myaplication.model.PelaporanModel;
 import baranghilang.myaplication.model.UserModel;
+
+import static baranghilang.myaplication.R.drawable.ic_icon_24dp;
 
 
 /**
@@ -50,28 +52,15 @@ public class TimelineFragment extends Fragment  implements
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Button btnRefresh;
     private static final int DIALOG1 = 1;
-    private Button btnBagi;
+    private int totalData=0;
 
-    ArrayList<UserModel> userMod = new ArrayList<>();
-    ArrayList<PelaporanModel> pelaporanMod = new ArrayList<>();
-    ArrayList<BarangModel> barangMod = new ArrayList<>();
+    List<UserModel> userMod = new ArrayList<>();
+    List<PelaporanModel> pelaporanMod = new ArrayList<>();
+    List<BarangModel> barangMod = new ArrayList<>();
     public ProgressDialog progressDialog = null;
 
-    private int[] mDemoDataSet0 = {R.drawable.ic_icon_24dp,
-            R.drawable.ic_icon_24dp,
-            R.drawable.ic_icon_24dp
-    };
-//
-//    private String[] mDemoDataSet = {"Flashdisk 8GB",
-//            "HP VIVO F5"
-//    };
-//
-//    private String[] mDemoDataSet2 = {"warna hitam, merk toshiba",
-//            "Casing warna putihhhhhhhhhh"
-//    };
-
-    private String[] urlImage,namaBarang,keterangan;
 
     @Nullable
     @Override
@@ -79,34 +68,10 @@ public class TimelineFragment extends Fragment  implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v= inflater.inflate(R.layout.activity_rcycl_timeline, container, false);
 
-        getPelaporan();
-        setAdater();
-
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabRefresh);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPelaporan();
-                setAdater();
-            }
-        });
-
-       // btnBagi = (Button) v.findViewById(R.id.btnBagikan);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.rvTL);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this.getActivity());
-        // mLayoutManager.
 
-        mAdapter = new RecyclerViewAdapterTimeline(mDemoDataSet0,namaBarang,keterangan);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-//        btnBagi.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(), "Konten dibagikan", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), mRecyclerView, new ClickListener() {
             @Override
@@ -191,59 +156,99 @@ public class TimelineFragment extends Fragment  implements
                     @Override
                     public void onResponse(String response) {
                         try {
+
+                            Toast.makeText(getActivity(),"Getting Data ...",Toast.LENGTH_LONG).show();
                             pelaporanMod.clear();
                             userMod.clear();
                             barangMod.clear();
                             JSONObject result = new JSONObject(response);
                             JSONArray results = result.getJSONArray("result");
+                            totalData = results.length();
+
                             for (int i = 0; i < results.length(); i++) {
+                                Log.e("Total array : ",String.valueOf(results.length()));
+
                                 PelaporanModel pelaporan = new PelaporanModel();
                                 UserModel user = new UserModel();
                                 BarangModel barang = new BarangModel();
 
                                 //Untuk Pelaporan
                                 pelaporan.setIdLapor(results.getJSONObject(i).getString("idPelaporan"));
+                                Log.e("Pelaporan : ",results.getJSONObject(i).getString("idPelaporan"));
+
                                 pelaporan.setIdPelapor(results.getJSONObject(i).getJSONObject("pelapor").getString("idUser"));
-                                pelaporan.setIdBarang(results.getJSONObject(i).getJSONObject("barang").getString("id_barang"));
+                                Log.e("Id Pelapor : ",results.getJSONObject(i).getJSONObject("pelapor").getString("idUser"));
+
+                                pelaporan.setIdBarang(results.getJSONObject(i).getJSONObject("barang").getString("idBarang"));
+                                Log.e("Id Barang : ",results.getJSONObject(i).getJSONObject("barang").getString("idBarang"));
+
                                 pelaporan.setKeterangan(results.getJSONObject(i).getString("keterangan"));
+                                Log.e("Keterangan : ",results.getJSONObject(i).getString("keterangan"));
+
                                 pelaporan.setLokHilang(results.getJSONObject(i).getString("tempatHilang"));
+                                Log.e("Tempat : ",results.getJSONObject(i).getString("tempatHilang"));
+
                                 pelaporan.setTglHilang(results.getJSONObject(i).getString("tanggalHilang"));
-                                pelaporan.setLokDitemukan(results.getJSONObject(i).getString("tempatDitemukan"));
-                                pelaporan.setTglDitemukan(results.getJSONObject(i).getString("tanggalDitemukan"));
-                                pelaporan.setIdPenemu(results.getJSONObject(i).getJSONObject("penemu").getString("idUser"));
+                                Log.e("Tanggal : ",results.getJSONObject(i).getString("tanggalHilang"));
+
+//                                pelaporan.setLokDitemukan(results.getJSONObject(i).getString("tempatDitemukan"));
+//                                Log.e("Tempat : ",results.getJSONObject(i).getString("tempatDitemukan"));
+//
+//                                pelaporan.setTglDitemukan(results.getJSONObject(i).getString("tanggalDitemukan"));
+//                                Log.e("Tanggal : ",results.getJSONObject(i).getString("tanggalDitemukan"));
+
+//                                pelaporan.setIdPenemu(results.getJSONObject(i).getJSONObject("penemu").getString("idUser"));
 
                                 //Untuk Pelapor
-                                user.setIdUser(results.getJSONObject(i).getJSONObject("pelapor").getString("idUser"));
-                                user.setUsername(results.getJSONObject(i).getJSONObject("pelapor").getString("username"));
+//                                user.setIdUser(results.getJSONObject(i).getJSONObject("pelapor").getString("idUser"));
+//                                Log.e("Id Pelapor : ",results.getJSONObject(i).getJSONObject("pelapor").getString("idUser"));
+//
+//                                user.setUsername(results.getJSONObject(i).getJSONObject("pelapor").getString("username"));
+//                                Log.e("Nama : ",results.getJSONObject(i).getJSONObject("pelapor").getString("username"));
+//
+//                                //Untuk Barang
+//                                barang.setIdBarang(results.getJSONObject(i).getJSONObject("barang").getString("idBarang"));
+//                                Log.e("Id Barang : ",results.getJSONObject(i).getJSONObject("barang").getString("idBarang"));
+//
+//                                barang.setIdKateg(results.getJSONObject(i).getJSONObject("barang").getJSONObject("kategoriBarang").getString("idKategoriBarang"));
+//                                Log.e("ID Kategori : ",results.getJSONObject(i).getJSONObject("barang").getJSONObject("kategoriBarang").getString("idKategoriBarang"));
+//
+//                                barang.setIdUser(results.getJSONObject(i).getJSONObject("barang").getJSONObject("user").getString("idBarang"));
+//                                Log.e("ID Pemilik : ",results.getJSONObject(i).getJSONObject("barang").getJSONObject("user").getString("idBarang"));
+//
+//                                barang.setJumlahBarang(results.getJSONObject(i).getJSONObject("barang").getString("jumlah"));
+//                                Log.e("Jumlah : ",results.getJSONObject(i).getJSONObject("barang").getString("jumlah"));
 
-                                //Untuk Barang
-                                barang.setIdBarang(results.getJSONObject(i).getJSONObject("barang").getString("idBarang"));
-                                barang.setIdKateg(results.getJSONObject(i).getJSONObject("barang").getJSONObject("kategoriBarang").getString("idKategoriBarang"));
-                                barang.setIdUser(results.getJSONObject(i).getJSONObject("barang").getJSONObject("user").getString("idBarang"));
-                                barang.setJumlahBarang(results.getJSONObject(i).getJSONObject("barang").getString("jumlah"));
                                 barang.setNamaBarang(results.getJSONObject(i).getJSONObject("barang").getString("nama"));
+                                Log.e("Nama Barang : ",results.getJSONObject(i).getJSONObject("barang").getString("nama"));
+
                                 barang.setStatusBarang(results.getJSONObject(i).getJSONObject("barang").getString("status"));
-                                barang.setUrlImage(results.getJSONObject(i).getJSONObject("barang").getString("url_image"));
+                                Log.e("Status : ",results.getJSONObject(i).getJSONObject("barang").getString("status"));
+//
+//                                barang.setUrlImage(results.getJSONObject(i).getJSONObject("barang").getString("url_image"));
+//                                Log.e("URL : ",results.getJSONObject(i).getJSONObject("barang").getString("url_image"));
 
                                 pelaporanMod.add(pelaporan);
                                 userMod.add(user);
                                 barangMod.add(barang);
 
-                                for (PelaporanModel modelPelaporan: pelaporanMod) {
-                                    Log.e("Data : ",modelPelaporan.toString());
-                                }
+
+                                Log.e("Keterangan : ",pelaporanMod.get(i).getKeterangan());
+                                Log.e("Barang : ",barangMod.get(i).getNamaBarang());
+
+                                Log.e("Test","reach end");
+
+                                Toast.makeText(getActivity(),"Getting Data Success",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
                     }
                 }){
             @Override
@@ -259,24 +264,39 @@ public class TimelineFragment extends Fragment  implements
                 return params;
             }
         };
-        progressDialog = new ProgressDialog(getActivity(),R.style.AppTheme);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Getting Data");
-        progressDialog.show();
 
         requestQueueActive.add(endpointActive);
 
     }
 
-
-
-
-    private void setAdater(){
-        for (int i = 0; i < pelaporanMod.size(); i++) {
-            urlImage[i]=barangMod.get(i).getUrlImage();
-            namaBarang[i]=barangMod.get(i).getNamaBarang();
-            keterangan[i]=pelaporanMod.get(i).getKeterangan();
+    public void setAdapter(){
+        ArrayList<String> tempNamaBarang = new ArrayList<>();
+        ArrayList<String> tempKeterangan = new ArrayList<>();
+        ArrayList<Integer> tempImage = new ArrayList<>();
+        for (int i = 0; i < totalData; i++) {
+            tempImage.add(ic_icon_24dp);
+            tempNamaBarang.add(barangMod.get(i).getNamaBarang());
+            tempKeterangan.add(pelaporanMod.get(i).getKeterangan());
         }
+        int[] image = new int[tempImage.size()];
+        for (int i = 0; i < tempImage.size(); i++) {
+            image[i] = tempImage.get(i);
+        }
+
+        String[] namaBarang = new String[tempNamaBarang.size()];
+        for(int j =0;j<tempNamaBarang.size();j++){
+            namaBarang[j] = tempNamaBarang.get(j);
+        }
+
+        String[] keterangan = new String[tempKeterangan.size()];
+        for(int j =0;j<tempKeterangan.size();j++){
+            keterangan[j] = tempKeterangan.get(j);
+        }
+
+
+        mAdapter = new RecyclerViewAdapterTimeline(image,namaBarang,keterangan);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
 }
