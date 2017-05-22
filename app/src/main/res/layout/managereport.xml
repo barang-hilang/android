@@ -14,7 +14,7 @@
         android:padding="10dp"
 
         android:text="KELOLA LAPORAN"
-        android:textColor="#0288D1"
+        android:textColor="#AB47BC"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/barang"
+        android:drawableLeft="@drawable/barangmanage"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="Nama barang"
@@ -46,7 +46,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/desc"
+        android:drawableLeft="@drawable/descmanage"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="Keterangan"
@@ -62,13 +62,38 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
+
+    <EditText
+        android:id="@+id/edJumlah"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/jumlahmanage"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="Jumlah"
+        android:inputType="number"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textColorHint="#959595"
+        android:textSize="16sp" />
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
     <EditText
         android:id="@+id/edLokasiHilang"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/locationss"
+        android:drawableLeft="@drawable/locationsmanage"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="Lokasi kehilangan"
@@ -90,7 +115,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/date"
+        android:drawableLeft="@drawable/datemanage"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="Tanggal kehilangan"
@@ -116,7 +141,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/url_pict"
+        android:drawableLeft="@drawable/url_pictmanage"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="URL Gambar Barang"
