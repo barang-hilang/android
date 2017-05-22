@@ -1,12 +1,17 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
+import baranghilang.myaplication.MainActivity;
 import baranghilang.myaplication.R;
 import baranghilang.myaplication.model.UserModel;
 
@@ -14,6 +19,25 @@ import baranghilang.myaplication.model.UserModel;
 public class MainMenuActivity extends ActionBarActivity {
     public static UserModel userModel;
     BottomBar mBottomBar;
+
+    @Override
+    public void onBackPressed() {
+        new LovelyStandardDialog(this)
+                .setTopColorRes(R.color.white_greyish)
+                .setButtonsColorRes(R.color.colorToolbar)
+                .setTitle("Konfirmasi")
+                .setMessage("Apa anda yakin ingin keluar ?")
+                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), MainActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(v.getContext(), "Berhasil Keluar", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +95,7 @@ public class MainMenuActivity extends ActionBarActivity {
         /*BottomBarBadge unread;
         unread = mBottomBar.makeBadgeForTabAt(3, "#BDBDBD", 13);
         unread.show();*/
+
+
     }
 }
