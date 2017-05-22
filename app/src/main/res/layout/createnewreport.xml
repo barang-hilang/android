@@ -87,12 +87,6 @@
         android:background="@color/white_greyish" />
 
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/white_greyish" />
-
     <EditText
         android:id="@+id/edLokasiHilang"
         android:layout_width="match_parent"

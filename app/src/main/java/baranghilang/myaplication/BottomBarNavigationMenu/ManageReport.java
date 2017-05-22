@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,7 @@ import baranghilang.myaplication.R;
 /**
  * Created by CMDDJ on 5/22/2017.
  */
-public class ManageReport extends Fragment implements
-        View.OnClickListener {
+public class ManageReport extends AppCompatActivity {
 
     public static final int DATE_DIALOG_ID = 0;
 
@@ -35,25 +35,24 @@ public class ManageReport extends Fragment implements
     String myFormat;
     SimpleDateFormat sdf;
 
-    @Nullable
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.managereport);
 
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View v= inflater.inflate(R.layout.managereport, container, false);
+        btnEdit = (Button) findViewById(R.id.edit);
+        btnBack = (TextView) findViewById(R.id.tvCancel);
 
-        btnEdit = (Button) v.findViewById(R.id.edit);
-        btnBack = (TextView) v.findViewById(R.id.tvCancel);
-
-        edNmBrg = (EditText) v.findViewById(R.id.edNamaBarang);
-        edKet = (EditText) v.findViewById(R.id.edKeterangan);
-        edJumlah = (EditText) v.findViewById(R.id.edJumlah);
-        edLok = (EditText) v.findViewById(R.id.edLokasiHilang);
-        edUrl = (EditText) v.findViewById(R.id.edUrlImage);
-        edTgl = (EditText) v.findViewById(R.id.dtTanggalHilang);
+        edNmBrg = (EditText) findViewById(R.id.edNamaBarang);
+        edKet = (EditText) findViewById(R.id.edKeterangan);
+        edJumlah = (EditText) findViewById(R.id.edJumlah);
+        edLok = (EditText) findViewById(R.id.edLokasiHilang);
+        edUrl = (EditText) findViewById(R.id.edUrlImage);
+        edTgl = (EditText) findViewById(R.id.dtTanggalHilang);
         edTgl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getActivity(),
+                new DatePickerDialog(getApplication(),
                         mDateSetListener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
 
             }
@@ -67,9 +66,35 @@ public class ManageReport extends Fragment implements
         edUrl.setEnabled(false);
 
 
-        setListeners();
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(btnEdit.getText()=="UBAH")
+                {
+                    Edit();
+                }
+                else if(btnEdit.getText()=="SIMPAN")
+                {
+                    Save();
+                }
 
-        return v;
+            }
+        });
+
+      btnBack.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              if(btnBack.getText()=="KEMBALI")
+              {
+                  Back();
+              }
+              else if(btnBack.getText()=="BATAL")
+              {
+                  Cancel();
+              }
+          }
+      });
+
     }
 
 
@@ -79,7 +104,7 @@ public class ManageReport extends Fragment implements
             c.set(Calendar.YEAR, year);
             c.set(Calendar.MONTH, monthOfYear);
             c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            //   edTgl.setText(date_selected);
+
 
             myFormat = "MM/dd/yyyy";
             sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -87,10 +112,7 @@ public class ManageReport extends Fragment implements
         }
     };
 
-    private void setListeners() {
-        btnEdit.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
-    }
+
 
     public void Save(){
         edNmBrg.setEnabled(false);
@@ -111,7 +133,7 @@ public class ManageReport extends Fragment implements
     }
 
     public void Back(){
-        Intent intent = new Intent(getActivity(), ManageReport.class);
+        Intent intent = new Intent(this, ManageReport.class);
         startActivity(intent);
     }
 
@@ -130,30 +152,5 @@ public class ManageReport extends Fragment implements
         edJumlah.setEnabled(false);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.edit:
-                if(btnEdit.getText()=="UBAH")
-                {
-                    Edit();
-                }
-                else if(btnEdit.getText()=="SIMPAN")
-                {
-                    Save();
-                }
 
-                break;
-            case R.id.tvCancel:
-                if(btnBack.getText()=="KEMBALI")
-                {
-                    Back();
-                }
-                else if(btnBack.getText()=="BATAL")
-                {
-                    Cancel();
-                }
-                break;
-        }
-    }
 }
