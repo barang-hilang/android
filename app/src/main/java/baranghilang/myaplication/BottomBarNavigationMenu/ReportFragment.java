@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +37,7 @@ public class ReportFragment  extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ProgressDialog progressDialog = null;
 
     private int[] mDemoDataSet0 = {R.drawable.ic_icon_24dp,
             R.drawable.ic_icon_24dp,
@@ -72,31 +71,14 @@ public class ReportFragment  extends Fragment {
         return v;
     }
 
-    public void getActiveOrderByEmail(){
-        RequestQueue requestQueueActive = Volley.newRequestQueue(this.getContext());
-        StringRequest endpointActive = new StringRequest(Request.Method.GET, "http://c-laundry.hol.es/api2/getOrders.php?email="+OrderHistory.emailUser,
+    public void getMyPelaporan(){
+        RequestQueue requestQueueActive = Volley.newRequestQueue(getActivity().getApplicationContext());
+        StringRequest endpointActive = new StringRequest(Request.Method.GET, "url disini",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            resultResponseActive.clear();
-                            JSONObject result = new JSONObject(response);
-                            JSONArray results = result.getJSONArray("result");
-                            for (int i = 0; i < results.length(); i++) {
-                                OrderLaundry orderLaundry = new OrderLaundry();
-                                orderLaundry.setId_order(results.getJSONObject(i).getString("id_order"));
-                                orderLaundry.setEmail(results.getJSONObject(i).getString("email"));
-                                orderLaundry.setAddress(results.getJSONObject(i).getString("address"));
-                                orderLaundry.setWeight(results.getJSONObject(i).getString("weight"));
-                                orderLaundry.setPrice(results.getJSONObject(i).getString("price"));
-                                orderLaundry.setDate_order(results.getJSONObject(i).getString("date_order"));
-                                orderLaundry.setDate_end(results.getJSONObject(i).getString("date_end"));
-                                orderLaundry.setStatus(results.getJSONObject(i).getString("status"));
-                                resultResponseActive.add(orderLaundry);
-                                for (OrderLaundry orderLaundry1: resultResponseActive) {
-                                    Log.e("Data : ",orderLaundry1.toString());
-                                }
-                            }
+                                JSONObject data = new JSONObject(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -106,7 +88,7 @@ public class ReportFragment  extends Fragment {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                     }
                 }){
@@ -120,7 +102,7 @@ public class ReportFragment  extends Fragment {
                 return super.getHeaders();
             }
         };
-        progressDialog = new ProgressDialog(this.getContext(),R.style.AppTheme_Dark_Dialog);
+        progressDialog = new ProgressDialog(getActivity().getApplicationContext(),R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Getting Data");
         progressDialog.show();
