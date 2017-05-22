@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import baranghilang.myaplication.Login_Fragment;
+import baranghilang.myaplication.MainActivity;
 import baranghilang.myaplication.R;
 
 
@@ -41,7 +44,13 @@ public class ProfileFragment extends Fragment  implements
         edHp = (EditText) v.findViewById(R.id.edPhone);
         edAddresses = (EditText) v.findViewById(R.id.edAddress);
 
-
+        btnEdit.setText("UBAH");
+        btnLogOut.setText("KELUAR");
+        edName.setEnabled(false);
+        edMail.setEnabled(false);
+        edPass.setEnabled(false);
+        edHp.setEnabled(false);
+        edAddresses.setEnabled(false);
 
         setListeners();
 
@@ -54,37 +63,60 @@ public class ProfileFragment extends Fragment  implements
     }
 
     public void Edit(){
-        if(btnEdit.getText()=="UBAH") {
-            btnEdit.setText("SIMPAN");
-            btnLogOut.setText("BATAL");
-            edName.setFocusable(true);
-            edMail.setFocusable(true);
-            edPass.setFocusable(true);
-            edHp.setFocusable(true);
-            edAddresses.setFocusable(true);
-        }
+
+        btnEdit.setText("SIMPAN");
+        btnLogOut.setText("BATAL");
+        edName.setEnabled(true);
+        edMail.setEnabled(true);
+        edPass.setEnabled(true);
+        edHp.setEnabled(true);
+        edAddresses.setEnabled(true);
+
 
     }
 
     public void Save(){
-        if(btnEdit.getText()=="SIMPAN") {
-            btnEdit.setText("UBAH");
-            btnLogOut.setText("KELUAR");
-            edName.setFocusable(false);
-            edMail.setFocusable(false);
-            edPass.setFocusable(false);
-            edHp.setFocusable(false);
-            edAddresses.setFocusable(false);
-        }
+
+        btnEdit.setText("UBAH");
+        btnLogOut.setText("KELUAR");
+        edName.setEnabled(false);
+        edMail.setEnabled(false);
+        edPass.setEnabled(false);
+        edHp.setEnabled(false);
+        edAddresses.setEnabled(false);
+
 
     }
 
     public void LogOut(){
-        Intent intent = new Intent(getActivity(), MainMenuActivity.class);
-        startActivity(intent);
+        new LovelyStandardDialog(getActivity())
+                .setTopColorRes(R.color.white_greyish)
+                .setButtonsColorRes(R.color.colorToolbar)
+                .setTitle("Konfirmasi")
+                .setMessage("Apa anda yakin ingin keluar ?")
+                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), MainActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(v.getContext(), "Berhasil Keluar", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
     }
 
-    public void Cancel(){}
+    public void Cancel(){
+        btnEdit.setText("UBAH");
+        btnLogOut.setText("KELUAR");
+        edName.setEnabled(false);
+        edMail.setEnabled(false);
+        edPass.setEnabled(false);
+        edHp.setEnabled(false);
+        edAddresses.setEnabled(false);
+
+        //balik ke tampil profil biasa
+    }
 
     @Override
     public void onClick(View v) {

@@ -81,7 +81,7 @@ public class TimelineFragment extends Fragment  implements
 
         getPelaporan();
         setAdater();
-               
+
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fabRefresh);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

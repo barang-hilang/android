@@ -104,9 +104,9 @@ public class MainMenuActivity extends ActionBarActivity {
         });
 
         mBottomBar.mapColorForTab(0, "#009688");
-        mBottomBar.mapColorForTab(1, "#F4511E");
+        mBottomBar.mapColorForTab(1, "#AB47BC");
         mBottomBar.mapColorForTab(2, "#0288D1");
-        mBottomBar.mapColorForTab(3, "#AB47BC");
+        mBottomBar.mapColorForTab(3, "#F4511E");
         mBottomBar.mapColorForTab(4, "#B71C1C");
 
         /*BottomBarBadge unread;

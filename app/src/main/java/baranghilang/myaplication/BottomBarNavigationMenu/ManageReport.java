@@ -1,22 +1,15 @@
 package baranghilang.myaplication.BottomBarNavigationMenu;
 
-
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,16 +21,16 @@ import java.util.Locale;
 import baranghilang.myaplication.R;
 
 /**
- * Created by CMDDJ on 5/12/2017.
+ * Created by CMDDJ on 5/22/2017.
  */
-public class CreateReport extends Fragment  implements
+public class ManageReport extends Fragment implements
         View.OnClickListener {
 
     public static final int DATE_DIALOG_ID = 0;
 
-    private static Button btnPublish;
-    private static TextView btnCancel;
-    private static EditText edNmBrg, edKet,edJumlah, edLok, edTgl, edUrl;
+    private static Button btnEdit;
+    private static TextView btnBack;
+    private static EditText edNmBrg, edKet, edJumlah, edLok, edTgl, edUrl;
     Calendar c = Calendar.getInstance();
     String myFormat;
     SimpleDateFormat sdf;
@@ -46,10 +39,10 @@ public class CreateReport extends Fragment  implements
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View v= inflater.inflate(R.layout.createnewreport, container, false);
+        View v= inflater.inflate(R.layout.managereport, container, false);
 
-        btnPublish = (Button) v.findViewById(R.id.publish);
-        btnCancel = (TextView) v.findViewById(R.id.tvCancel);
+        btnEdit = (Button) v.findViewById(R.id.edit);
+        btnBack = (TextView) v.findViewById(R.id.tvCancel);
 
         edNmBrg = (EditText) v.findViewById(R.id.edNamaBarang);
         edKet = (EditText) v.findViewById(R.id.edKeterangan);
@@ -65,6 +58,15 @@ public class CreateReport extends Fragment  implements
 
             }
         });
+
+        edNmBrg.setEnabled(false);
+        edKet.setEnabled(false);
+        edJumlah.setEnabled(false);
+        edLok.setEnabled(false);
+        edTgl.setEnabled(false);
+        edUrl.setEnabled(false);
+
+
         setListeners();
 
         return v;
@@ -74,10 +76,10 @@ public class CreateReport extends Fragment  implements
     private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-          c.set(Calendar.YEAR, year);
-          c.set(Calendar.MONTH, monthOfYear);
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, monthOfYear);
             c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-         //   edTgl.setText(date_selected);
+            //   edTgl.setText(date_selected);
 
             myFormat = "MM/dd/yyyy";
             sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -86,30 +88,71 @@ public class CreateReport extends Fragment  implements
     };
 
     private void setListeners() {
-        btnPublish.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
+        btnEdit.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
     }
 
-    public void Publish(){
-        Toast.makeText(getActivity(), "Report published!", Toast.LENGTH_SHORT)
-                .show();
-        Intent intent = new Intent(getActivity(), MainMenuActivity.class);
+    public void Save(){
+        edNmBrg.setEnabled(false);
+        edKet.setEnabled(false);
+        edLok.setEnabled(false);
+        edTgl.setEnabled(false);
+        edUrl.setEnabled(false);
+        edJumlah.setEnabled(false);
+    }
+
+    public void Edit(){
+        edNmBrg.setEnabled(true);
+        edKet.setEnabled(true);
+        edJumlah.setEnabled(true);
+        edLok.setEnabled(true);
+        edTgl.setEnabled(true);
+        edUrl.setEnabled(true);
+    }
+
+    public void Back(){
+        Intent intent = new Intent(getActivity(), ManageReport.class);
         startActivity(intent);
     }
 
     public void Cancel(){
-        Intent intent = new Intent(getActivity(), MainMenuActivity.class);
-        startActivity(intent);
+        edNmBrg.setText("");
+        edKet.setText("");
+        edLok.setText("");
+        edTgl.setText("");
+        edUrl.setText("");
+
+        edNmBrg.setEnabled(false);
+        edKet.setEnabled(false);
+        edLok.setEnabled(false);
+        edTgl.setEnabled(false);
+        edUrl.setEnabled(false);
+        edJumlah.setEnabled(false);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.publish:
-                Publish();
+            case R.id.edit:
+                if(btnEdit.getText()=="UBAH")
+                {
+                    Edit();
+                }
+                else if(btnEdit.getText()=="SIMPAN")
+                {
+                    Save();
+                }
+
                 break;
             case R.id.tvCancel:
-                Cancel();
+                if(btnBack.getText()=="KEMBALI")
+                {
+                    Back();
+                }
+                else if(btnBack.getText()=="BATAL")
+                {
+                    Cancel();
+                }
                 break;
         }
     }
